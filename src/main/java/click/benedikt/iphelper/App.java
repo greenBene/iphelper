@@ -13,11 +13,10 @@ import java.io.*;
 public class App {
 
     public static final String PATH_TO_DB = "./data/GeoLite2-City.mmdb";
-    private static final String FILE_NAME = "./data/Test.xlsx";
     public static final String LANG = "de";
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         JFrame frame = new JFrame("IP Helper");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -25,6 +24,7 @@ public class App {
         frame.pack();
         frame.setResizable(false);
         frame.setVisible(true);
+
     }
 
     static void addCountryToExcel(String pathToFile, String firstCell) throws Exception {
@@ -46,9 +46,18 @@ public class App {
                 row = sheet.getRow(i);
                 if (row != null) {
                     ip_cell = row.getCell(colInt);
+                    String ip = "";
                     Cell country_cell = row.createCell(colInt + 1);
-                    String name = util.getCountry(ip_cell.getStringCellValue());
-                    country_cell.setCellValue(name);
+                    System.out.println(ip_cell.getCellType().name());
+                    if (ip_cell.getCellType().name().equals("STRING")){
+                        try {
+                            String value = ip_cell.getStringCellValue();
+                            String name = util.getCountry(value);
+                            country_cell.setCellValue(name);
+                        }catch (Exception e){
+
+                        }
+                    }
                 }
                 i++;
             } while (row != null);

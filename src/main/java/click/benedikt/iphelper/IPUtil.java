@@ -19,7 +19,7 @@ public class IPUtil {
 
     public IPUtil(String pathToDB) throws IOException {
         // A File object pointing to your GeoIP2 or GeoLite2 database
-        File database = new File("./data/GeoLite2-City.mmdb");
+        File database = new File(pathToDB);
 
         // This creates the DatabaseReader object. To improve performance, reuse
         // the object across lookups. The object is thread-safe.
